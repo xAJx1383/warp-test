@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-func RunWarp(psiphonEnabled, gool, scan, verbose bool, country, bindAddress, endpoint, license string, ctx context.Context) error {
+func RunWarp(psiphonEnabled, gool, scan, verbose bool, country, bindAddress, endpoint, license string, ctx context.Context, rtThreshold int) error {
 	// check if user input is not correct
 	if (psiphonEnabled && gool) || (!psiphonEnabled && country != "") {
 		log.Println("Wrong combination of flags!")
@@ -51,12 +51,10 @@ func RunWarp(psiphonEnabled, gool, scan, verbose bool, country, bindAddress, end
 
 	if scan {
 		var err error
-		endpoints, err = wiresocks.RunScan(&ctx)
+		endpoints, err = wiresocks.RunScan(&ctx, rtThreshold)
 		if err != nil {
 			return err
 		}
-		log.Println("Cooling down please wait 5 seconds...")
-		time.Sleep(5 * time.Second)
 	}
 
 	if !psiphonEnabled && !gool {

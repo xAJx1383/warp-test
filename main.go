@@ -25,6 +25,7 @@ func main() {
 		psiphonEnabled = flag.Bool("cfon", false, "enable psiphonEnabled over warp")
 		gool           = flag.Bool("gool", false, "enable warp gooling")
 		scan           = flag.Bool("scan", false, "enable warp scanner(experimental)")
+		rtt            = flag.Int("rtt", 1000, "scanner rtt threshold, default 1000")
 	)
 
 	flag.Usage = usage
@@ -35,7 +36,7 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 
 	go func() {
-		err := app.RunWarp(*psiphonEnabled, *gool, *scan, *verbose, *country, *bindAddress, *endpoint, *license, ctx)
+		err := app.RunWarp(*psiphonEnabled, *gool, *scan, *verbose, *country, *bindAddress, *endpoint, *license, ctx, *rtt)
 		if err != nil {
 			log.Fatal(err)
 		}

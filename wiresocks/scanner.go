@@ -25,7 +25,7 @@ func canConnectIPv6(remoteAddr string) bool {
 	return true
 }
 
-func RunScan(ctx *context.Context) (result []string, err error) {
+func RunScan(ctx *context.Context, rtt int) (result []string, err error) {
 	cfg, err := ini.Load("./primary/wgcf-profile.ini")
 	if err != nil {
 		log.Printf("Failed to read file: %v", err)
@@ -45,7 +45,7 @@ func RunScan(ctx *context.Context) (result []string, err error) {
 		ipscanner.WithWarpPeerPublicKey(publicKey),
 		ipscanner.WithUseIPv6(canConnectIPv6("[2001:4860:4860::8888]:80")),
 		ipscanner.WithUseIPv4(true),
-		ipscanner.WithMaxDesirableRTT(500),
+		ipscanner.WithMaxDesirableRTT(rtt),
 		ipscanner.WithCidrList([]string{
 			"162.159.192.0/24",
 			"162.159.193.0/24",
