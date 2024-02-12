@@ -22,6 +22,7 @@ type Flags struct {
 	PsiphonEnabled bool
 	Gool           bool
 	Scan           bool
+	Rtt            int
 }
 
 var validFlags = map[string]bool{
@@ -33,6 +34,7 @@ var validFlags = map[string]bool{
 	"-cfon":    true,
 	"-gool":    true,
 	"-scan":    true,
+	"-rtt":     true,
 }
 
 func newFlags() *Flags {
@@ -48,6 +50,7 @@ func (f *Flags) setup() {
 	flag.BoolVar(&f.PsiphonEnabled, "cfon", false, "enable Psiphon over warp")
 	flag.BoolVar(&f.Gool, "gool", false, "enable warp gooling")
 	flag.BoolVar(&f.Scan, "scan", false, "enable warp scanner(experimental)")
+	flag.IntVar(&f.Rtt, "rtt", 1000, "scanner rtt threshold, default 1000")
 
 	flag.Usage = usage
 	flag.Parse()
@@ -137,7 +140,7 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 
 	go func() {
-		err := app.RunWarp(flags.PsiphonEnabled, flags.Gool, flags.Scan, flags.Verbose, flags.Country, flags.BindAddress, flags.Endpoint, flags.License, ctx)
+		err := app.RunWarp(flags.PsiphonEnabled, flags.Gool, flags.Scan, flags.Verbose, flags.Country, flags.BindAddress, flags.Endpoint, flags.License, ctx, flags.Rtt)
 		if err != nil {
 			log.Fatal(err)
 		}
