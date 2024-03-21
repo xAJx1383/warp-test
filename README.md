@@ -45,8 +45,9 @@ FLAGS
       --gool              enable gool mode (warp in warp)
       --cfon              enable psiphon mode (must provide country as well)
       --country STRING    psiphon country code (valid values: [AT BE BG BR CA CH CZ DE DK EE ES FI FR GB HU IE IN IT JP LV NL NO PL RO RS SE SG SK UA US]) (default: AT)
-      --scan              enable warp scanning (experimental)
+      --scan              enable warp scanning
       --rtt DURATION      scanner rtt limit (default: 1s)
+  -c, --config STRING     path to config file
 ```
 
 ### Country Codes for Psiphon

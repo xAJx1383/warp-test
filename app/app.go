@@ -111,7 +111,11 @@ func runWarp(ctx context.Context, l *slog.Logger, bind netip.AddrPort, endpoint 
 		return err
 	}
 
-	tnet.StartProxy(bind)
+	_, err = tnet.StartProxy(bind)
+	if err != nil {
+		return err
+	}
+
 	l.Info("serving proxy", "address", bind)
 
 	return nil
