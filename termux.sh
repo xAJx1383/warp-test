@@ -46,14 +46,14 @@ install() {
     pacman -Syu openssh = apt update; apt full-upgrade -y; apt install -y openssh
     check_dependencies
 
-    if wget https://github.com/bepass-org/warp-plus/releases/download/v1.1.2/warp-plus-android-arm64.30fc34.zip &&
-        unzip warp-plus-android-arm64.30fc34.zip &&
+    if wget https://github.com/bepass-org/warp-plus/releases/download/v1.1.3/warp-plus_android-arm64.zip &&
+        unzip warp-plus_android-arm64.zip &&
         mv warp-plus warp &&
         chmod +x warp &&
         cp warp "$PREFIX/bin/usef" &&
         cp warp "$PREFIX/bin/warp-plus" &&
         cp warp "$PREFIX/bin/warp"; then
-        rm "README.md" "LICENSE" "warp-plus-android-arm64.30fc34.zip"
+        rm "README.md" "LICENSE" "warp-plus_android-arm64.zip"
         echo "================================================"
         echo -e "${green}Warp installed successfully.${rest}"
         socks
@@ -85,16 +85,16 @@ install_arm() {
         *) echo -e "${red}Unsupported architecture.${rest}"; return ;;
     esac
 
-    WARP_URL="https://github.com/bepass-org/warp-plus/releases/download/v1.1.2/warp-plus-linux-$ARCH.30fc34.zip"
+    WARP_URL="https://github.com/bepass-org/warp-plus/releases/download/v1.1.3/warp-plus_linux-$ARCH.zip"
 
     if wget "$WARP_URL" &&
-        unzip "warp-plus-linux-$ARCH.30fc34.zip" &&
+        unzip "warp-plus_linux-$ARCH.zip" &&
         mv warp-plus warp &&
         chmod +x warp &&
         cp warp "$PREFIX/bin/usef" &&
         cp warp "$PREFIX/bin/warp-plus" &&
         cp warp "$PREFIX/bin/warp"; then
-        rm "README.md" "LICENSE" "warp-plus-linux-$ARCH.30fc34.zip"
+        rm "README.md" "LICENSE" "warp-plus_linux-$ARCH.zip"
         echo -e "${blue}================================================${rest}"
         echo -e "${blue}================================================${rest}"
         echo -e "${green}Warp installed successfully.${rest}"
