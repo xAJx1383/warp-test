@@ -303,7 +303,8 @@ func (s *Server) embedHandleConnect(req *request) error {
 
 func (s *Server) handleAssociate(req *request) error {
 	destinationAddr := req.DestinationAddr.String()
-	udpConn, err := s.ProxyListenPacket(s.Context, "udp", destinationAddr)
+	udpConn, err := s.ProxyListenPacket(s.Context, "udp", "127.0.0.1:0")
+	//udpConn, err := s.ListenPacket(s.Context, "udp", destinationAddr)
 	if err != nil {
 		if err := sendReply(req.Conn, errToReply(err), nil); err != nil {
 			return fmt.Errorf("failed to send reply: %v", err)
@@ -341,11 +342,10 @@ func (s *Server) handleAssociate(req *request) error {
 		Reader:      cConn,
 		Writer:      cConn,
 		Network:     "udp",
-		Destination: cConn.targetAddr.String(),
-		DestHost:    cConn.targetAddr.(*net.UDPAddr).IP.String(),
-		DestPort:    int32(cConn.targetAddr.(*net.UDPAddr).Port),
-	}
-
+		Destination: req.DestinationAddr.String(),
+		DestHost:    req.DestinationAddr.IP.String(),
+		DestPort:    int32(req.DestinationAddr.Port),
+		}
 	return s.UserAssociateHandle(proxyReq)
 }
 
